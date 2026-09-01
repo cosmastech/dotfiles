@@ -1,0 +1,10 @@
+# One source per line. Optional second field is --skill name.
+# Lines starting with # are ignored.
+#
+#   owner/repo
+#   owner/repo  skill-name
+#   https://github.com/owner/repo/tree/main/path/to/skill
+
+cosmastech/skills  planning-conventions
+cosmastech/skills  multi-model-code-review
+dmmulroy/.dotfiles  bro

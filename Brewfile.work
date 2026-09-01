@@ -1,0 +1,3 @@
+# Work-only packages. install.sh applies this file when it has entries.
+# Example:
+# brew "kubectl"

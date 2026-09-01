@@ -1,0 +1,9 @@
+[user]
+	name = Luke Kuzmish
+	email = lakuzmish@gmail.com
+[include]
+	path = ~/.gitconfig.local
+[push]
+	autoSetupRemote = true
+[rerere]
+	enabled = true

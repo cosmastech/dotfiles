@@ -1,0 +1,272 @@
+{
+  "version": 1,
+  "permissions": {
+    "allow": [
+      "Shell(ls)",
+      "Shell(cd)",
+      "Shell(cat)",
+      "Shell(echo)",
+      "Shell(head)",
+      "Shell(find)",
+      "Shell(mkdir)",
+      "Shell(mv)",
+      "Shell(jq)",
+      "Shell(git log)",
+      "Shell(git diff)",
+      "Shell(git status)",
+      "Shell(git merge-base)",
+      "Shell(docker compose)",
+      "WebFetch(api.github.com)",
+      "WebFetch(raw.githubusercontent.com)"
+    ],
+    "deny": []
+  },
+  "editor": {
+    "vimMode": false
+  },
+  "display": {
+    "showLineNumbers": false,
+    "showThinkingBlocks": true,
+    "showStatusIndicators": true,
+    "showStatusLineRunningTime": false,
+    "mode": "zen"
+  },
+  "notifications": true,
+  "hints": true,
+  "modelSlashCommands": true,
+  "rewind": true,
+  "statusLine": {
+    "type": "command",
+    "command": "/bin/bash $HOME/.cursor/statusline.sh",
+    "padding": 2,
+    "timeoutMs": 10000
+  },
+  "model": {
+    "modelId": "grok-4.6",
+    "displayModelId": "grok-4.6",
+    "displayName": "Cursor Grok 4.6 High Fast",
+    "displayNameShort": "Cursor Grok 4.6 High Fast",
+    "aliases": [],
+    "maxMode": true
+  },
+  "hasChangedDefaultModel": true,
+  "maxMode": true,
+  "modelParameters": {
+    "claude-4.6-opus-max-thinking": [],
+    "composer-2-fast": [],
+    "gpt-5.3-codex-xhigh-fast": [],
+    "composer-2": [
+      {
+        "id": "fast",
+        "value": "true"
+      }
+    ],
+    "claude-4.6-opus-high": [],
+    "kimi-k2.5": [],
+    "composer-1.5": [],
+    "default": [],
+    "gpt-5.4-xhigh": [],
+    "claude-4.5-opus-high-thinking": [],
+    "gpt-5.4-high-fast": [],
+    "claude-4.6-opus-high-thinking": [],
+    "claude-opus-4-7-thinking-xhigh": [],
+    "claude-opus-4-7-medium": [],
+    "claude-opus-4-7-xhigh": [],
+    "gpt-5.4-medium-fast": [],
+    "gpt-5.5-medium": [],
+    "claude-opus-4-7-high": [],
+    "gpt-5.5-extra-high": [],
+    "claude-opus-4-7": [
+      {
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "300k"
+      },
+      {
+        "id": "effort",
+        "value": "xhigh"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "gpt-5.5": [
+      {
+        "id": "context",
+        "value": "272k"
+      },
+      {
+        "id": "reasoning",
+        "value": "extra-high"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "composer-2.5": [
+      {
+        "id": "fast",
+        "value": "true"
+      }
+    ],
+    "claude-opus-4-8": [
+      {
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "300k"
+      },
+      {
+        "id": "effort",
+        "value": "high"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "claude-fable-5": [
+      {
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "300k"
+      },
+      {
+        "id": "effort",
+        "value": "xhigh"
+      }
+    ],
+    "grok-4.5": [
+      {
+        "id": "effort",
+        "value": "high"
+      },
+      {
+        "id": "fast",
+        "value": "true"
+      }
+    ],
+    "gpt-5.6-sol": [
+      {
+        "id": "context",
+        "value": "272k"
+      },
+      {
+        "id": "reasoning",
+        "value": "high"
+      },
+      {
+        "id": "fast",
+        "value": "true"
+      }
+    ],
+    "claude-sonnet-4-5": [
+      {
+        "id": "thinking",
+        "value": "false"
+      },
+      {
+        "id": "context",
+        "value": "200k"
+      }
+    ],
+    "gpt-5.6-terra": [
+      {
+        "id": "context",
+        "value": "272k"
+      },
+      {
+        "id": "reasoning",
+        "value": "max"
+      },
+      {
+        "id": "fast",
+        "value": "true"
+      }
+    ],
+    "kimi-k3": [
+      {
+        "id": "reasoning",
+        "value": "max"
+      }
+    ],
+    "grok-4.6": [
+      {
+        "id": "effort",
+        "value": "high"
+      },
+      {
+        "id": "fast",
+        "value": "true"
+      }
+    ],
+    "claude-opus-5": [
+      {
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "300k"
+      },
+      {
+        "id": "effort",
+        "value": "xhigh"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ]
+  },
+  "selectedModel": {
+    "modelId": "grok-4.6",
+    "parameters": [
+      {
+        "id": "effort",
+        "value": "high"
+      },
+      {
+        "id": "fast",
+        "value": "true"
+      }
+    ]
+  },
+  "modelSelectionHistory": [
+    "grok-4.6",
+    "claude-opus-4-8",
+    "claude-fable-5",
+    "gpt-5.6-sol",
+    "claude-opus-5",
+    "kimi-k3",
+    "grok-4.5",
+    "composer-2.5",
+    "gpt-5.6-terra",
+    "claude-sonnet-4-5",
+    "gpt-5.5"
+  ],
+  "exploreSubagentModel": "default",
+  "network": {
+    "useHttp1ForAgent": false
+  },
+  "approvalMode": "unrestricted",
+  "autoAcceptWebSearch": false,
+  "sandbox": {
+    "mode": "disabled",
+    "networkAccess": "user_config_with_defaults"
+  },
+  "attribution": {
+    "attributeCommitsToAgent": false,
+    "attributePRsToAgent": false
+  }
+}

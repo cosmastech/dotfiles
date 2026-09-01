@@ -7,9 +7,10 @@ Inspired by [dmmulroy/.dotfiles](https://github.com/dmmulroy/.dotfiles) (Brewfil
 ## What it does
 
 - `brew update` and `brew bundle` (does **not** `brew upgrade`)
-- Symlinks zsh, git, Zed, and Cursor statusline
+- Symlinks zsh, git, Zed, Ghostty, `gh`, and Cursor statusline
+- Copies Hex settings (sandbox cannot follow a symlink)
 - Merges portable Cursor agent CLI prefs into `~/.cursor/cli-config.json` (auth/cache stay on the machine)
-- Installs a short list of agent skills via `npx skills`
+- Installs a short list of agent skills via `npx skills` (`brew node` provides `npx`)
 
 Machine-specific and secret config lives in untracked files:
 
@@ -36,6 +37,9 @@ zsh/.zprofile
 git/config
 zed/settings.json
 zed/keymap.json
+ghostty/config
+gh/config.yml
+hex/hex_settings.json
 cursor/cli-config.json   # portable agent CLI prefs (no auth)
 cursor/statusline.sh
 skills.txt          # npx skills sources

@@ -1,0 +1,65 @@
+{
+  "copyToClipboard": false,
+  "wordRemappings": [],
+  "showDockIcon": true,
+  "superFastModeEnabled": false,
+  "soundEffectsVolume": 0.2,
+  "useClipboardPaste": true,
+  "saveTranscriptionHistory": true,
+  "wordRemovals": [
+    {
+      "id": "C2AB870B-8557-4288-9E69-ED84DDDB7630",
+      "isEnabled": true,
+      "pattern": "uh+"
+    },
+    {
+      "id": "2B6622B9-2F82-4ACA-BE3D-1B5CE02A3E36",
+      "isEnabled": true,
+      "pattern": "um+"
+    },
+    {
+      "id": "EA6B0AE5-C5C2-4A09-9430-B9B583730672",
+      "isEnabled": true,
+      "pattern": "er+"
+    },
+    {
+      "id": "3E360B40-4501-4C7A-92CA-93DF0D9DEBB7",
+      "isEnabled": true,
+      "pattern": "hm+"
+    }
+  ],
+  "openOnLogin": true,
+  "hotkey": {
+    "modifiers": {
+      "modifiers": [
+        {
+          "side": "right",
+          "kind": "option"
+        }
+      ]
+    }
+  },
+  "preventSystemSleep": true,
+  "useDoubleTapOnly": false,
+  "selectedModel": "parakeet-tdt-0.6b-v2-coreml",
+  "doubleTapLockEnabled": false,
+  "wordRemovalsEnabled": false,
+  "minimumKeyTime": 0.2,
+  "pasteLastTranscriptHotkey": {
+    "modifiers": {
+      "modifiers": [
+        {
+          "kind": "shift",
+          "side": "either"
+        },
+        {
+          "kind": "option",
+          "side": "either"
+        }
+      ]
+    },
+    "key": "v"
+  },
+  "recordingAudioBehavior": "doNothing",
+  "soundEffectsEnabled": true
+}

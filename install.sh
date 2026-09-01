@@ -75,13 +75,28 @@ install_brew_packages() {
     log "Brewfile.work has no packages; skipping"
   fi
 
-  for app in "Zed.app" "Spotify.app" "Hex.app"; do
+  for app in "Zed.app" "Spotify.app" "Hex.app" "Ghostty.app"; do
     if [[ -d "/Applications/$app" ]]; then
       log "found /Applications/$app"
     else
       warn "missing /Applications/$app"
     fi
   done
+}
+
+copy_hex_settings() {
+  local src="$DOTFILES/hex/hex_settings.json"
+  local dest="$HOME/Library/Containers/com.kitlangton.Hex/Data/Library/Application Support/com.kitlangton.Hex/hex_settings.json"
+
+  mkdir -p "$(dirname "$dest")"
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    mkdir -p "$BACKUP"
+    cp -a "$dest" "$BACKUP/hex_settings.json"
+    log "backed up $dest -> $BACKUP"
+  fi
+  # Copy, do not symlink: Hex runs sandboxed and rewrites this file.
+  cp "$src" "$dest"
+  log "copied Hex settings -> $dest"
 }
 
 install_skills() {
@@ -176,6 +191,7 @@ doctor() {
   command -v brew >/dev/null && brew bundle check --file="$DOTFILES/Brewfile" || true
   printf '    ~/.zshrc -> %s\n' "$(readlink "$HOME/.zshrc" 2>/dev/null || echo '(not a symlink)')"
   printf '    ~/.cursor/cli-config.json model = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('.cursor/cli-config.json').read_text()).get('selectedModel',{}).get('modelId','?'))" 2>/dev/null || echo '(missing)')"
+  printf '    node = %s  npx = %s\n' "$(command -v node || echo missing)" "$(command -v npx || echo missing)"
   printf '    git user.email (global) = %s\n' "$(git config --global user.email 2>/dev/null || echo '(unset)')"
   printf '    git user.name  (global) = %s\n' "$(git config --global user.name 2>/dev/null || echo '(unset)')"
 }
@@ -199,7 +215,10 @@ backup_and_link "$DOTFILES/zsh/.zprofile" "$HOME/.zprofile"
 backup_and_link "$DOTFILES/git/config" "$HOME/.gitconfig"
 backup_and_link "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
 backup_and_link "$DOTFILES/zed/keymap.json" "$HOME/.config/zed/keymap.json"
+backup_and_link "$DOTFILES/ghostty/config" "$HOME/.config/ghostty/config"
+backup_and_link "$DOTFILES/gh/config.yml" "$HOME/.config/gh/config.yml"
 backup_and_link "$DOTFILES/cursor/statusline.sh" "$HOME/.cursor/statusline.sh"
+copy_hex_settings
 chmod +x "$HOME/.cursor/statusline.sh" "$DOTFILES/cursor/statusline.sh"
 merge_cursor_cli_config
 

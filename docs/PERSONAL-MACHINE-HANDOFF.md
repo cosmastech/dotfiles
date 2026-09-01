@@ -32,9 +32,12 @@ Already decided / already in the work repo:
 | Layout | `install.sh`, `Brewfile`, empty `Brewfile.work`, `ln -sfn` (no Stow) |
 | Git | `Luke Kuzmish` / `lakuzmish@gmail.com`, `push.autoSetupRemote`, `rerere`; machine overrides in `~/.gitconfig.local` |
 | Shell | Oh My Zsh (`robbyrussell`, `git` plugin), nvm, `~/.local/bin`, `source ~/.zshrc.local` |
-| Apps | `gh`, `zed`, `spotify`, `kitlangton-hex` (`Hex.app`) |
+| Apps | `gh`, `zed`, `spotify`, `kitlangton-hex`, `ghostty`, Geist Mono, `node` |
 | Zed | JetBrains keymap, format_on_save off, system theme, One Light / One Dark, agent dock right |
-| Skills | `cosmastech/skills` → `planning-conventions`, `multi-model-code-review`; `dmmulroy/.dotfiles` → `bro` |
+| Ghostty | Geist Mono 16 |
+| Hex | Right Option hotkey, Shift-Option-V paste last, Parakeet model |
+| gh | `git_protocol: ssh`, `co` → `pr checkout`. Hosts/auth stay local. |
+| Skills | `cosmastech/skills` → `planning-conventions`, `multi-model-code-review`; `dmmulroy/.dotfiles` → `bro`; `mattpocock/skills` → `grill-with-docs` (+ `grilling`, `domain-modeling`) |
 | Cursor CLI | zen display, thinking blocks, max mode, Grok 4.6 default, `approvalMode: unrestricted`, custom `statusline.sh`, attribution off. Auth/team caches and Loop MCP allowlist are **not** in the repo. |
 
 Work-laptop-only (must **not** be recommended for the public repo unless Luke says so):

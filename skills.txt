@@ -8,3 +8,7 @@
 cosmastech/skills  planning-conventions
 cosmastech/skills  multi-model-code-review
 dmmulroy/.dotfiles  bro
+# grill-with-docs replaced grill-me for coding; grilling + domain-modeling are required deps
+mattpocock/skills  grill-with-docs
+mattpocock/skills  grilling
+mattpocock/skills  domain-modeling

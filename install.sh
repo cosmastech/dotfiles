@@ -139,12 +139,12 @@ merge_cursor_cli_config() {
     log "backed up $dest -> $BACKUP"
   fi
 
-  python3 - "$src" "$dest" "$HOME" <<'PY'
+  python3 - "$src" "$dest" <<'PY'
 import json
 import sys
 from pathlib import Path
 
-src, dest, home = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
+src, dest = Path(sys.argv[1]), Path(sys.argv[2])
 repo = json.loads(src.read_text())
 preserve_keys = (
     "privacyCache",
@@ -174,11 +174,6 @@ for item in live_allow + repo_allow:
         allow.append(item)
 merged.setdefault("permissions", {})["allow"] = allow
 merged["permissions"]["deny"] = repo.get("permissions", {}).get("deny", live.get("permissions", {}).get("deny", []))
-
-status = merged.get("statusLine") or {}
-if status.get("type") == "command":
-    status["command"] = f"/bin/bash {home}/.cursor/statusline.sh"
-    merged["statusLine"] = status
 
 dest.write_text(json.dumps(merged, indent=2) + "\n")
 PY
@@ -217,9 +212,7 @@ backup_and_link "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
 backup_and_link "$DOTFILES/zed/keymap.json" "$HOME/.config/zed/keymap.json"
 backup_and_link "$DOTFILES/ghostty/config" "$HOME/.config/ghostty/config"
 backup_and_link "$DOTFILES/gh/config.yml" "$HOME/.config/gh/config.yml"
-backup_and_link "$DOTFILES/cursor/statusline.sh" "$HOME/.cursor/statusline.sh"
 copy_hex_settings
-chmod +x "$HOME/.cursor/statusline.sh" "$DOTFILES/cursor/statusline.sh"
 merge_cursor_cli_config
 
 if [[ "${SKIP_SKILLS:-}" == "1" ]]; then

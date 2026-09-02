@@ -35,12 +35,6 @@
   "hints": true,
   "modelSlashCommands": true,
   "rewind": true,
-  "statusLine": {
-    "type": "command",
-    "command": "/bin/bash $HOME/.cursor/statusline.sh",
-    "padding": 2,
-    "timeoutMs": 10000
-  },
   "model": {
     "modelId": "grok-4.6",
     "displayModelId": "grok-4.6",

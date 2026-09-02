@@ -17,7 +17,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 | Shell | Oh My Zsh + nvm in public zshrc; Loop/Herd/PhpStorm/Snowflake/tokens in `.zshrc.local` |
 | Apps | `gh`, `zed`, `spotify`, `kitlangton-hex`, `ghostty`, Geist Mono, `node` (for `npx`) |
 | Skills | `planning-conventions`, `multi-model-code-review`, `bro`, `grill-with-docs` (+ `grilling`, `domain-modeling`) |
-| Cursor CLI | Portable prefs + statusline in repo; merge into live `cli-config.json`; strip auth/team caches and Loop MCP allows from git |
+| Cursor CLI | Portable prefs in repo; merge into live `cli-config.json`; strip auth/team caches and Loop MCP allows from git |
 | Apply on work laptop | Yes, with backups. No `brew upgrade`. |
 
 ## Failure scenarios

@@ -38,7 +38,7 @@ Already decided / already in the work repo:
 | Hex | Right Option hotkey, Shift-Option-V paste last, Parakeet model |
 | gh | `git_protocol: ssh`, `co` → `pr checkout`. Hosts/auth stay local. |
 | Skills | `cosmastech/skills` → `planning-conventions`, `multi-model-code-review`; `dmmulroy/.dotfiles` → `bro`; `mattpocock/skills` → `grill-with-docs` (+ `grilling`, `domain-modeling`) |
-| Cursor CLI | zen display, thinking blocks, max mode, Grok 4.6 default, `approvalMode: unrestricted`, custom `statusline.sh`, attribution off. Auth/team caches and Loop MCP allowlist are **not** in the repo. |
+| Cursor CLI | zen display, thinking blocks, max mode, Grok 4.6 default, `approvalMode: unrestricted`, attribution off. Auth/team caches and Loop MCP allowlist are **not** in the repo. |
 
 Work-laptop-only (must **not** be recommended for the public repo unless Luke says so):
 
@@ -140,7 +140,7 @@ ls -la ~/.dotfiles ~/dotfiles ~/projects/dotfiles 2>/dev/null
 gh repo list cosmastech --limit 50 2>/dev/null
 
 # Cursor agent CLI (redact authInfo / *Cache in the report)
-ls -la ~/.cursor/cli-config.json ~/.cursor/statusline.sh 2>/dev/null
+ls -la ~/.cursor/cli-config.json 2>/dev/null
 ```
 
 Compare `/Applications` and `brew list --cask` against v1: `gh`, Zed, Spotify, Hex.

@@ -6,15 +6,17 @@ Inspired by [dmmulroy/.dotfiles](https://github.com/dmmulroy/.dotfiles) (Brewfil
 
 ## What it does
 
-- `brew update` and `brew bundle` (does **not** `brew upgrade`)
+- `brew update` and `brew bundle --no-upgrade`
 - Symlinks zsh, git, Zed, Ghostty, and `gh`
 - Copies Hex settings (sandbox cannot follow a symlink)
 - Merges portable Cursor agent CLI prefs into `~/.cursor/cli-config.json` (auth/cache stay on the machine)
 - Installs a short list of agent skills via `npx skills` (`brew node` provides `npx`)
+- Installs Plannotator and its optional skills with the official installer
 
 Machine-specific and secret config lives in untracked files:
 
 - `~/.zshrc.local`
+- `~/.zshenv.local`
 - `~/.zprofile.local`
 - `~/.gitconfig.local`
 
@@ -27,12 +29,15 @@ git clone https://github.com/cosmastech/dotfiles.git ~/.dotfiles
 
 Existing files are moved to `~/.dotfiles/backups/<timestamp>/` before they are replaced with symlinks.
 
+Set `SKIP_BREW=1`, `SKIP_SKILLS=1`, or `SKIP_PLANNOTATOR=1` to omit that part of an install.
+
 ## Layout
 
 ```
 Brewfile            # shared packages
 Brewfile.work       # optional work-only packages (empty hook)
 zsh/.zshrc
+zsh/.zshenv
 zsh/.zprofile
 git/config
 zed/settings.json

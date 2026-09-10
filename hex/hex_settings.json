@@ -42,7 +42,7 @@
   "preventSystemSleep": true,
   "useDoubleTapOnly": false,
   "selectedModel": "parakeet-tdt-0.6b-v2-coreml",
-  "doubleTapLockEnabled": false,
+  "doubleTapLockEnabled": true,
   "wordRemovalsEnabled": false,
   "minimumKeyTime": 0.2,
   "pasteLastTranscriptHotkey": {

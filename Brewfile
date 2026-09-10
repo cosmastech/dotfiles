@@ -1,8 +1,11 @@
 brew "curl"
 brew "gh"
+brew "git-lfs"
 brew "jq"
 brew "node"
+brew "pnpm"
 brew "ripgrep"
+brew "uv"
 
 cask "font-geist-mono"
 cask "ghostty"

@@ -65,12 +65,12 @@ install_brew_packages() {
 
   # Existing /Applications apps sometimes fail "adopt" without sudo.
   # Missing packages are the real failure; we check those after.
-  log "brew bundle --file=$DOTFILES/Brewfile"
-  brew bundle --file="$DOTFILES/Brewfile" || warn "brew bundle reported errors (often sudo adopt on existing apps)"
+  log "brew bundle --no-upgrade --file=$DOTFILES/Brewfile"
+  brew bundle --no-upgrade --file="$DOTFILES/Brewfile" || warn "brew bundle reported errors (often sudo adopt on existing apps)"
 
   if grep -Eq '^(brew|cask) ' "$DOTFILES/Brewfile.work"; then
-    log "brew bundle --file=$DOTFILES/Brewfile.work"
-    brew bundle --file="$DOTFILES/Brewfile.work" || warn "Brewfile.work bundle reported errors"
+    log "brew bundle --no-upgrade --file=$DOTFILES/Brewfile.work"
+    brew bundle --no-upgrade --file="$DOTFILES/Brewfile.work" || warn "Brewfile.work bundle reported errors"
   else
     log "Brewfile.work has no packages; skipping"
   fi
@@ -97,6 +97,13 @@ copy_hex_settings() {
   # Copy, do not symlink: Hex runs sandboxed and rewrites this file.
   cp "$src" "$dest"
   log "copied Hex settings -> $dest"
+}
+
+install_plannotator() {
+  log "installing/updating Plannotator"
+  curl -fsSL https://plannotator.ai/install.sh \
+    | bash -s -- --non-interactive --extras \
+    || warn "Plannotator install failed"
 }
 
 install_skills() {
@@ -183,7 +190,7 @@ PY
 
 doctor() {
   log "doctor"
-  command -v brew >/dev/null && brew bundle check --file="$DOTFILES/Brewfile" || true
+  command -v brew >/dev/null && brew bundle check --no-upgrade --file="$DOTFILES/Brewfile" || true
   printf '    ~/.zshrc -> %s\n' "$(readlink "$HOME/.zshrc" 2>/dev/null || echo '(not a symlink)')"
   printf '    ~/.cursor/cli-config.json model = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('.cursor/cli-config.json').read_text()).get('selectedModel',{}).get('modelId','?'))" 2>/dev/null || echo '(missing)')"
   printf '    node = %s  npx = %s\n' "$(command -v node || echo missing)" "$(command -v npx || echo missing)"
@@ -194,6 +201,7 @@ doctor() {
 ensure_oh_my_zsh
 
 seed_local_stub "$HOME/.zshrc.local" "# Machine-specific zsh. Not committed."
+seed_local_stub "$HOME/.zshenv.local" "# Machine-specific zsh environment. Not committed."
 seed_local_stub "$HOME/.zprofile.local" "# Machine-specific zprofile. Not committed."
 seed_local_stub "$HOME/.gitconfig.local" "# Machine-specific git. Not committed.
 # [user]
@@ -206,6 +214,7 @@ else
 fi
 
 backup_and_link "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+backup_and_link "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
 backup_and_link "$DOTFILES/zsh/.zprofile" "$HOME/.zprofile"
 backup_and_link "$DOTFILES/git/config" "$HOME/.gitconfig"
 backup_and_link "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
@@ -214,6 +223,12 @@ backup_and_link "$DOTFILES/ghostty/config" "$HOME/.config/ghostty/config"
 backup_and_link "$DOTFILES/gh/config.yml" "$HOME/.config/gh/config.yml"
 copy_hex_settings
 merge_cursor_cli_config
+
+if [[ "${SKIP_PLANNOTATOR:-}" == "1" ]]; then
+  log "SKIP_PLANNOTATOR=1; not touching Plannotator"
+else
+  install_plannotator
+fi
 
 if [[ "${SKIP_SKILLS:-}" == "1" ]]; then
   log "SKIP_SKILLS=1; not touching npx skills"

@@ -75,7 +75,7 @@ install_brew_packages() {
     log "Brewfile.work has no packages; skipping"
   fi
 
-  for app in "Zed.app" "Spotify.app" "Hex.app" "Ghostty.app"; do
+  for app in "Zed.app" "Spotify.app" "Hex.app" "Ghostty.app" "Flycut.app"; do
     if [[ -d "/Applications/$app" ]]; then
       log "found /Applications/$app"
     else

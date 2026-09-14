@@ -8,6 +8,7 @@ brew "ripgrep"
 brew "uv"
 
 cask "font-geist-mono"
+cask "flycut"
 cask "ghostty"
 cask "kitlangton-hex"
 cask "spotify"

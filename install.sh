@@ -106,6 +106,13 @@ install_plannotator() {
     || warn "Plannotator install failed"
 }
 
+install_cursor_cli() {
+  log "installing/updating Cursor agent CLI"
+  curl https://cursor.com/install -fsS \
+    | bash \
+    || warn "Cursor agent CLI install failed"
+}
+
 install_skills() {
   if ! command -v npx >/dev/null 2>&1; then
     warn "npx not found; skipping skills"
@@ -193,6 +200,7 @@ doctor() {
   command -v brew >/dev/null && brew bundle check --no-upgrade --file="$DOTFILES/Brewfile" || true
   printf '    ~/.zshrc -> %s\n' "$(readlink "$HOME/.zshrc" 2>/dev/null || echo '(not a symlink)')"
   printf '    ~/.cursor/cli-config.json model = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('.cursor/cli-config.json').read_text()).get('selectedModel',{}).get('modelId','?'))" 2>/dev/null || echo '(missing)')"
+  printf '    agent = %s\n' "$(command -v agent || command -v cursor-agent || echo missing)"
   printf '    node = %s  npx = %s\n' "$(command -v node || echo missing)" "$(command -v npx || echo missing)"
   printf '    git user.email (global) = %s\n' "$(git config --global user.email 2>/dev/null || echo '(unset)')"
   printf '    git user.name  (global) = %s\n' "$(git config --global user.name 2>/dev/null || echo '(unset)')"
@@ -223,6 +231,12 @@ backup_and_link "$DOTFILES/ghostty/config" "$HOME/.config/ghostty/config"
 backup_and_link "$DOTFILES/gh/config.yml" "$HOME/.config/gh/config.yml"
 copy_hex_settings
 merge_cursor_cli_config
+
+if [[ "${SKIP_CURSOR_CLI:-}" == "1" ]]; then
+  log "SKIP_CURSOR_CLI=1; not touching Cursor agent CLI"
+else
+  install_cursor_cli
+fi
 
 if [[ "${SKIP_PLANNOTATOR:-}" == "1" ]]; then
   log "SKIP_PLANNOTATOR=1; not touching Plannotator"

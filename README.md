@@ -10,6 +10,7 @@ Inspired by [dmmulroy/.dotfiles](https://github.com/dmmulroy/.dotfiles) (Brewfil
 - Symlinks zsh, git, Zed, Ghostty, and `gh`
 - Copies Hex settings (sandbox cannot follow a symlink)
 - Merges portable Cursor agent CLI prefs into `~/.cursor/cli-config.json` (auth/cache stay on the machine)
+- Installs the Cursor agent CLI with the official installer
 - Installs a short list of agent skills via `npx skills` (`brew node` provides `npx`)
 - Installs Plannotator and its optional skills with the official installer
 
@@ -29,7 +30,7 @@ git clone https://github.com/cosmastech/dotfiles.git ~/.dotfiles
 
 Existing files are moved to `~/.dotfiles/backups/<timestamp>/` before they are replaced with symlinks.
 
-Set `SKIP_BREW=1`, `SKIP_SKILLS=1`, or `SKIP_PLANNOTATOR=1` to omit that part of an install.
+Set `SKIP_BREW=1`, `SKIP_SKILLS=1`, `SKIP_PLANNOTATOR=1`, or `SKIP_CURSOR_CLI=1` to omit that part of an install.
 
 ## Layout
 

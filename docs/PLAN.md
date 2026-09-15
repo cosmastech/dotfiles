@@ -18,7 +18,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 | Apps | `gh`, `git-lfs`, `zed`, `spotify`, `kitlangton-hex`, `ghostty`, Geist Mono, `node` (for `npx`), `pnpm`, `uv` |
 | Skills | `planning-conventions`, `multi-model-code-review`, `bro`, `grill-with-docs` (+ `grilling`, `domain-modeling`) |
 | Plannotator | Official installer with optional skills; `SKIP_PLANNOTATOR=1` opt-out |
-| Cursor CLI | Portable prefs in repo; merge into live `cli-config.json`; strip auth/team caches and Loop MCP allows from git |
+| Cursor CLI | Official installer (`~/.local/bin/agent`); `SKIP_CURSOR_CLI=1` opt-out. Portable prefs in repo; merge into live `cli-config.json`; strip auth/team caches and Loop MCP allows from git |
 | Apply on work laptop | Yes, with backups. No `brew upgrade`. |
 
 ## Failure scenarios
@@ -30,6 +30,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 | `brew bundle` fights a DMG-installed Hex/Zed/Spotify | Adopt can fail without sudo `chmod`; apps stay; install continues | Check `/Applications`; do not `brew upgrade` |
 | Skill install fails | Other steps already done; rerun `npx skills add …` | Print the failed source |
 | Plannotator install fails | Other bootstrap steps continue | Rerun the official installer |
+| Cursor CLI install fails | Other bootstrap steps continue | Rerun `curl https://cursor.com/install -fsS \| bash` |
 | Token lands in git | `.gitignore` + pre-push audit of staged files | Never copy `*.local` into the repo |
 | Cursor CLI symlink would write Auth0/team cache into git | Merge, do not symlink `cli-config.json` | Live file keeps `authInfo` / `*Cache` |
 | Public zshrc is missing a PATH this laptop needs | That PATH belongs in `.zshrc.local`; restore from backup if a session breaks | Open a new terminal and check |

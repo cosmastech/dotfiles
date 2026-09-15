@@ -131,11 +131,12 @@ install_skills() {
 
     if [[ -n "$skill" ]]; then
       log "npx skills add $source --skill $skill"
-      npx --yes skills add "$source" --skill "$skill" -g -y \
+      # skills reads stdin; keep it off the skills.txt loop
+      npx --yes skills add "$source" --skill "$skill" -g -y </dev/null \
         || warn "skills add failed or partially failed: $source $skill"
     else
       log "npx skills add $source"
-      npx --yes skills add "$source" -g -y \
+      npx --yes skills add "$source" -g -y </dev/null \
         || warn "skills add failed or partially failed: $source"
     fi
   done <"$DOTFILES/skills.txt"

@@ -48,6 +48,7 @@ gh/config.yml
 hex/hex_settings.json
 cursor/cli-config.json   # portable agent CLI prefs (no auth)
 skills.txt          # npx skills sources
+scripts/install-agents.mjs  # fetch subagent .md files (skips local edits)
 install.sh
 ```
 

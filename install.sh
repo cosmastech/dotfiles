@@ -33,6 +33,33 @@ backup_and_link() {
   log "linked $dest -> $src"
 }
 
+# Real file that sources the repo copy. Installers that append to ~/.zshrc
+# then write here instead of into git.
+write_source_stub() {
+  local src="$1"
+  local dest="$2"
+  local source_line="source \"$src\""
+
+  mkdir -p "$(dirname "$dest")"
+
+  if [[ -f "$dest" && ! -L "$dest" ]] && grep -Fq "$source_line" "$dest"; then
+    log "already sources $src from $dest"
+    return
+  fi
+
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    mkdir -p "$BACKUP"
+    mv "$dest" "$BACKUP/$(basename "$dest")"
+    log "backed up $dest -> $BACKUP"
+  fi
+
+  printf '%s\n' \
+    "# ~/.dotfiles stub. Installers may append below this line." \
+    "$source_line" \
+    "" >"$dest"
+  log "wrote stub $dest -> $src"
+}
+
 ensure_oh_my_zsh() {
   if [[ -d "$OH_MY_ZSH" ]]; then
     log "oh-my-zsh already present"
@@ -199,7 +226,13 @@ PY
 doctor() {
   log "doctor"
   command -v brew >/dev/null && brew bundle check --no-upgrade --file="$DOTFILES/Brewfile" || true
-  printf '    ~/.zshrc -> %s\n' "$(readlink "$HOME/.zshrc" 2>/dev/null || echo '(not a symlink)')"
+  if [[ -L "$HOME/.zshrc" ]]; then
+    printf '    ~/.zshrc -> %s\n' "$(readlink "$HOME/.zshrc")"
+  elif [[ -f "$HOME/.zshrc" ]] && grep -Fq "source \"$DOTFILES/zsh/.zshrc\"" "$HOME/.zshrc"; then
+    printf '    ~/.zshrc stub -> %s\n' "$DOTFILES/zsh/.zshrc"
+  else
+    printf '    ~/.zshrc -> %s\n' '(not a stub or symlink)'
+  fi
   printf '    ~/.cursor/cli-config.json model = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('.cursor/cli-config.json').read_text()).get('selectedModel',{}).get('modelId','?'))" 2>/dev/null || echo '(missing)')"
   printf '    agent = %s\n' "$(command -v agent || command -v cursor-agent || echo missing)"
   printf '    node = %s  npx = %s\n' "$(command -v node || echo missing)" "$(command -v npx || echo missing)"
@@ -222,9 +255,9 @@ else
   install_brew_packages
 fi
 
-backup_and_link "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
-backup_and_link "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
-backup_and_link "$DOTFILES/zsh/.zprofile" "$HOME/.zprofile"
+write_source_stub "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+write_source_stub "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
+write_source_stub "$DOTFILES/zsh/.zprofile" "$HOME/.zprofile"
 backup_and_link "$DOTFILES/git/config" "$HOME/.gitconfig"
 backup_and_link "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
 backup_and_link "$DOTFILES/zed/keymap.json" "$HOME/.config/zed/keymap.json"

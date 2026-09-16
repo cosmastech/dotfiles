@@ -7,7 +7,8 @@ Inspired by [dmmulroy/.dotfiles](https://github.com/dmmulroy/.dotfiles) (Brewfil
 ## What it does
 
 - `brew update` and `brew bundle --no-upgrade`
-- Symlinks zsh, git, Zed, Ghostty, and `gh`
+- Writes `~/.zshrc` / `.zshenv` / `.zprofile` stubs that source the repo (so installers do not write into git)
+- Symlinks git, Zed, Ghostty, and `gh`
 - Copies Hex settings (sandbox cannot follow a symlink)
 - Merges portable Cursor agent CLI prefs into `~/.cursor/cli-config.json` (auth/cache stay on the machine)
 - Installs the Cursor agent CLI with the official installer
@@ -28,7 +29,7 @@ git clone https://github.com/cosmastech/dotfiles.git ~/.dotfiles
 ~/.dotfiles/install.sh
 ```
 
-Existing files are moved to `~/.dotfiles/backups/<timestamp>/` before they are replaced with symlinks.
+Existing files are moved to `~/.dotfiles/backups/<timestamp>/` before they are replaced.
 
 Set `SKIP_BREW=1`, `SKIP_SKILLS=1`, `SKIP_PLANNOTATOR=1`, or `SKIP_CURSOR_CLI=1` to omit that part of an install.
 

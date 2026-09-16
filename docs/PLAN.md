@@ -14,7 +14,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 | Git identity (this laptop) | email overridden in `~/.gitconfig.local` |
 | Remote | public `cosmastech/dotfiles` |
 | Path | `~/.dotfiles` |
-| Shell | Oh My Zsh + nvm in public zshrc; machine-specific shell config in `~/.zshrc.local`, `~/.zshenv.local`, and `~/.zprofile.local` |
+| Shell | Oh My Zsh + nvm in public zshrc. Home `~/.zshrc` / `.zshenv` / `.zprofile` are stubs that source the repo so installers do not write into git. Machine-specific shell config in `~/.zshrc.local`, `~/.zshenv.local`, and `~/.zprofile.local` |
 | Apps | `gh`, `git-lfs`, `zed`, `spotify`, `kitlangton-hex`, `ghostty`, Geist Mono, `node` (for `npx`), `pnpm`, `uv` |
 | Skills | `planning-conventions`, `multi-model-code-review`, `bro`, `grill-with-docs` (+ `grilling`, `domain-modeling`) |
 | Plannotator | Official installer with optional skills; `SKIP_PLANNOTATOR=1` opt-out |
@@ -39,7 +39,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 
 After `./install.sh`:
 
-- `readlink ~/.zshrc` → `~/.dotfiles/zsh/.zshrc`
+- `~/.zshrc` is a regular file that sources `~/.dotfiles/zsh/.zshrc`
 - `git config --global user.email` on this laptop → work email (local override)
 - `brew bundle check --no-upgrade --file ~/.dotfiles/Brewfile`
 - `npx skills list` shows the configured v1 skills

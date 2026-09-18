@@ -12,3 +12,4 @@ dmmulroy/.dotfiles  bro
 mattpocock/skills  grill-with-docs
 mattpocock/skills  grilling
 mattpocock/skills  domain-modeling
+https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review

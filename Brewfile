@@ -7,6 +7,7 @@ brew "pnpm"
 brew "ripgrep"
 brew "uv"
 
+cask "cursor"
 cask "font-geist-mono"
 cask "flycut"
 cask "ghostty"

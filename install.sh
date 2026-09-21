@@ -169,6 +169,36 @@ install_skills() {
   done <"$DOTFILES/skills.txt"
 }
 
+# Overlay portable VS Code settings onto a live User/settings.json.
+# Repo keys win; extra live keys (Cursor-only prefs, UI state) stay.
+merge_vscode_settings() {
+  local src="$DOTFILES/vscode/settings.json"
+  local dest="$1"
+
+  mkdir -p "$(dirname "$dest")"
+
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    mkdir -p "$BACKUP"
+    cp -a "$dest" "$BACKUP/$(basename "$dest")-$(basename "$(dirname "$(dirname "$dest")")")"
+    log "backed up $dest -> $BACKUP"
+  fi
+
+  python3 - "$src" "$dest" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+src, dest = Path(sys.argv[1]), Path(sys.argv[2])
+repo = json.loads(src.read_text())
+live = json.loads(dest.read_text()) if dest.exists() else {}
+merged = dict(live)
+merged.update(repo)
+dest.write_text(json.dumps(merged, indent=4) + "\n")
+PY
+
+  log "merged VS Code settings -> $dest"
+}
+
 merge_cursor_cli_config() {
   local src="$DOTFILES/cursor/cli-config.json"
   local dest="$HOME/.cursor/cli-config.json"
@@ -233,6 +263,7 @@ doctor() {
   else
     printf '    ~/.zshrc -> %s\n' '(not a stub or symlink)'
   fi
+  printf '    Cursor User/settings.json autoSave = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('Library/Application Support/Cursor/User/settings.json').read_text()).get('files.autoSave','(missing)'))" 2>/dev/null || echo '(missing)')"
   printf '    ~/.cursor/cli-config.json model = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('.cursor/cli-config.json').read_text()).get('selectedModel',{}).get('modelId','?'))" 2>/dev/null || echo '(missing)')"
   printf '    agent = %s\n' "$(command -v agent || command -v cursor-agent || echo missing)"
   printf '    node = %s  npx = %s\n' "$(command -v node || echo missing)" "$(command -v npx || echo missing)"
@@ -264,6 +295,12 @@ backup_and_link "$DOTFILES/zed/keymap.json" "$HOME/.config/zed/keymap.json"
 backup_and_link "$DOTFILES/ghostty/config" "$HOME/.config/ghostty/config"
 backup_and_link "$DOTFILES/gh/config.yml" "$HOME/.config/gh/config.yml"
 copy_hex_settings
+merge_vscode_settings "$HOME/Library/Application Support/Cursor/User/settings.json"
+if [[ -d "$HOME/Library/Application Support/Code" || -d "/Applications/Visual Studio Code.app" ]]; then
+  merge_vscode_settings "$HOME/Library/Application Support/Code/User/settings.json"
+else
+  log "VS Code not installed; skipped Code/User/settings.json"
+fi
 merge_cursor_cli_config
 
 if [[ "${SKIP_CURSOR_CLI:-}" == "1" ]]; then

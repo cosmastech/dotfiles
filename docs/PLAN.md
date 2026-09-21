@@ -19,6 +19,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 | Skills | `planning-conventions`, `multi-model-code-review`, `bro`, `grill-with-docs` (+ `grilling`, `domain-modeling`) |
 | Plannotator | Official installer with optional skills; `SKIP_PLANNOTATOR=1` opt-out |
 | Cursor CLI | Official installer (`~/.local/bin/agent`); `SKIP_CURSOR_CLI=1` opt-out. Portable prefs in repo; merge into live `cli-config.json`; strip auth/team caches and Loop MCP allows from git |
+| VS Code / Cursor editor | Portable defaults in `vscode/settings.json` (autosave, format on save, no minimap, preview tabs). Merge into Cursor and VS Code `User/settings.json`; do not symlink (Cursor-only keys stay local) |
 | Apply on work laptop | Yes, with backups. No `brew upgrade`. |
 
 ## Failure scenarios

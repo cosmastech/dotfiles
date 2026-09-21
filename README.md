@@ -10,6 +10,7 @@ Inspired by [dmmulroy/.dotfiles](https://github.com/dmmulroy/.dotfiles) (Brewfil
 - Writes `~/.zshrc` / `.zshenv` / `.zprofile` stubs that source the repo (so installers do not write into git)
 - Symlinks git, Zed, Ghostty, and `gh`
 - Copies Hex settings (sandbox cannot follow a symlink)
+- Merges portable VS Code settings into Cursor (and VS Code if installed). Extra live keys stay on the machine
 - Merges portable Cursor agent CLI prefs into `~/.cursor/cli-config.json` (auth/cache stay on the machine)
 - Installs the Cursor agent CLI with the official installer
 - Installs a short list of agent skills via `npx skills` (`brew node` provides `npx`)
@@ -47,6 +48,7 @@ zed/keymap.json
 ghostty/config
 gh/config.yml
 hex/hex_settings.json
+vscode/settings.json     # shared Cursor + VS Code defaults (no Cursor-only keys)
 cursor/cli-config.json   # portable agent CLI prefs (no auth)
 skills.txt          # npx skills sources
 install.sh

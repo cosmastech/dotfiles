@@ -8,7 +8,8 @@ Inspired by [dmmulroy/.dotfiles](https://github.com/dmmulroy/.dotfiles) (Brewfil
 
 - `brew update` and `brew bundle --no-upgrade`
 - Writes `~/.zshrc` / `.zshenv` / `.zprofile` stubs that source the repo (so installers do not write into git)
-- Symlinks git, Zed, Ghostty, and `gh`
+- Writes a `~/.gitconfig` stub that includes the repo (so `git config --global` does not write into git)
+- Symlinks Zed, Ghostty, and `gh`
 - Copies Hex settings (sandbox cannot follow a symlink)
 - Merges portable VS Code settings into Cursor (and VS Code if installed). Extra live keys stay on the machine
 - Merges portable Cursor agent CLI prefs into `~/.cursor/cli-config.json` (auth/cache stay on the machine)

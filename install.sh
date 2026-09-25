@@ -33,6 +33,34 @@ backup_and_link() {
   log "linked $dest -> $src"
 }
 
+# Real file that includes the repo copy. git config --global then writes
+# here (hooksPath, etc.) instead of into git.
+write_gitconfig_stub() {
+  local src="$1"
+  local dest="$2"
+  local include_line="	path = $src"
+
+  mkdir -p "$(dirname "$dest")"
+
+  if [[ -f "$dest" && ! -L "$dest" ]] && grep -Fq "$include_line" "$dest"; then
+    log "already includes $src from $dest"
+    return
+  fi
+
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    mkdir -p "$BACKUP"
+    mv "$dest" "$BACKUP/$(basename "$dest")"
+    log "backed up $dest -> $BACKUP"
+  fi
+
+  printf '%s\n' \
+    "# ~/.dotfiles stub. git config --global writes below this line." \
+    "[include]" \
+    "$include_line" \
+    "" >"$dest"
+  log "wrote stub $dest -> $src"
+}
+
 # Real file that sources the repo copy. Installers that append to ~/.zshrc
 # then write here instead of into git.
 write_source_stub() {
@@ -263,6 +291,14 @@ doctor() {
   else
     printf '    ~/.zshrc -> %s\n' '(not a stub or symlink)'
   fi
+  if [[ -L "$HOME/.gitconfig" ]]; then
+    printf '    ~/.gitconfig -> %s\n' "$(readlink "$HOME/.gitconfig")"
+  elif [[ -f "$HOME/.gitconfig" ]] && grep -Fq "path = $DOTFILES/git/config" "$HOME/.gitconfig"; then
+    printf '    ~/.gitconfig stub -> %s\n' "$DOTFILES/git/config"
+  else
+    printf '    ~/.gitconfig -> %s\n' '(not a stub or symlink)'
+  fi
+  printf '    git core.hooksPath = %s\n' "$(git config --show-origin --get core.hooksPath 2>/dev/null || echo '(unset)')"
   printf '    Cursor User/settings.json autoSave = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('Library/Application Support/Cursor/User/settings.json').read_text()).get('files.autoSave','(missing)'))" 2>/dev/null || echo '(missing)')"
   printf '    ~/.cursor/cli-config.json model = %s\n' "$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path.home().joinpath('.cursor/cli-config.json').read_text()).get('selectedModel',{}).get('modelId','?'))" 2>/dev/null || echo '(missing)')"
   printf '    agent = %s\n' "$(command -v agent || command -v cursor-agent || echo missing)"
@@ -278,7 +314,9 @@ seed_local_stub "$HOME/.zshenv.local" "# Machine-specific zsh environment. Not c
 seed_local_stub "$HOME/.zprofile.local" "# Machine-specific zprofile. Not committed."
 seed_local_stub "$HOME/.gitconfig.local" "# Machine-specific git. Not committed.
 # [user]
-# 	email = you@work.example"
+# 	email = you@work.example
+# [core]
+# 	hooksPath = ~/.git-hooks"
 
 if [[ "${SKIP_BREW:-}" == "1" ]]; then
   log "SKIP_BREW=1; not touching Homebrew"
@@ -289,7 +327,7 @@ fi
 write_source_stub "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 write_source_stub "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
 write_source_stub "$DOTFILES/zsh/.zprofile" "$HOME/.zprofile"
-backup_and_link "$DOTFILES/git/config" "$HOME/.gitconfig"
+write_gitconfig_stub "$DOTFILES/git/config" "$HOME/.gitconfig"
 backup_and_link "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
 backup_and_link "$DOTFILES/zed/keymap.json" "$HOME/.config/zed/keymap.json"
 backup_and_link "$DOTFILES/ghostty/config" "$HOME/.config/ghostty/config"

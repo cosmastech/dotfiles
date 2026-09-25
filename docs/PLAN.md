@@ -12,6 +12,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 | Work hook | `Brewfile.work` exists; empty today |
 | Git identity (repo) | Luke Kuzmish / `lakuzmish@gmail.com` |
 | Git identity (this laptop) | email overridden in `~/.gitconfig.local` |
+| Git config | Home `~/.gitconfig` is a stub that includes the repo. `git config --global` and hook installers write there (or in `~/.gitconfig.local`), not into git |
 | Remote | public `cosmastech/dotfiles` |
 | Path | `~/.dotfiles` |
 | Shell | Oh My Zsh + nvm in public zshrc. Home `~/.zshrc` / `.zshenv` / `.zprofile` are stubs that source the repo so installers do not write into git. Machine-specific shell config in `~/.zshrc.local`, `~/.zshenv.local`, and `~/.zprofile.local` |
@@ -34,6 +35,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 | Cursor CLI install fails | Other bootstrap steps continue | Rerun `curl https://cursor.com/install -fsS \| bash` |
 | Token lands in git | `.gitignore` + pre-push audit of staged files | Never copy `*.local` into the repo |
 | Cursor CLI symlink would write Auth0/team cache into git | Merge, do not symlink `cli-config.json` | Live file keeps `authInfo` / `*Cache` |
+| `git config --global` / gitleaks writes `core.hooksPath` into git | Do not symlink `~/.gitconfig`; stub includes the repo | Machine hooks stay in `~/.gitconfig` or `~/.gitconfig.local` |
 | Public zshrc is missing a PATH this laptop needs | That PATH belongs in `.zshrc.local`; restore from backup if a session breaks | Open a new terminal and check |
 
 ## Observability
@@ -41,6 +43,7 @@ Boring bootstrap at `~/.dotfiles`, public as `cosmastech/dotfiles`. One `install
 After `./install.sh`:
 
 - `~/.zshrc` is a regular file that sources `~/.dotfiles/zsh/.zshrc`
+- `~/.gitconfig` is a regular file that includes `~/.dotfiles/git/config`
 - `git config --global user.email` on this laptop → work email (local override)
 - `brew bundle check --no-upgrade --file ~/.dotfiles/Brewfile`
 - `npx skills list` shows the configured v1 skills

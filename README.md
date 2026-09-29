@@ -14,7 +14,7 @@ Inspired by [dmmulroy/.dotfiles](https://github.com/dmmulroy/.dotfiles) (Brewfil
 - Merges portable VS Code settings into Cursor (and VS Code if installed). Extra live keys stay on the machine
 - Merges portable Cursor agent CLI prefs into `~/.cursor/cli-config.json` (auth/cache stay on the machine)
 - Installs the Cursor agent CLI with the official installer
-- Installs a short list of agent skills via `npx skills` (`brew node` provides `npx`)
+- Installs a short list of agent skills via `npx skills` (`brew node` provides `npx`). Refresh that list on its own with `./install-skills.sh`
 - Installs Plannotator and its optional skills with the official installer
 
 Machine-specific and secret config lives in untracked files:
@@ -35,6 +35,12 @@ Existing files are moved to `~/.dotfiles/backups/<timestamp>/` before they are r
 
 Set `SKIP_BREW=1`, `SKIP_SKILLS=1`, `SKIP_PLANNOTATOR=1`, or `SKIP_CURSOR_CLI=1` to omit that part of an install.
 
+Refresh skills without the rest of the bootstrap:
+
+```bash
+~/.dotfiles/install-skills.sh
+```
+
 ## Layout
 
 ```
@@ -53,6 +59,7 @@ vscode/settings.json     # shared Cursor + VS Code defaults (no Cursor-only keys
 cursor/cli-config.json   # portable agent CLI prefs (no auth)
 skills.txt          # npx skills sources
 install.sh
+install-skills.sh   # npx skills from skills.txt; also invoked by install.sh
 ```
 
 ## Docs

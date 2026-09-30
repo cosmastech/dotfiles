@@ -49,7 +49,7 @@ Skills already on disk can be relocated without fetching again:
 ~/.dotfiles/install-skills.sh --publish-only
 ```
 
-Only names in `skills.txt` are moved. Other folders in `~/.agents/skills` stay where they are.
+A listed skill whose `~/.cursor/skills/<name>` directory is missing is installed again from `skills.txt`, then published back into `~/.cursor/skills` as a real directory. Only names in `skills.txt` are moved. Other folders in `~/.agents/skills` stay where they are.
 
 ## Layout
 

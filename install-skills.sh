@@ -36,6 +36,18 @@ skill_folder_name() {
   fi
 }
 
+# skills reads stdin; keep it off the skills.txt loop.
+add_skill() {
+  local source="$1" skill="$2"
+  if [[ -n "$skill" ]]; then
+    log "npx skills add $source --skill $skill"
+    npx --yes skills add "$source" --skill "$skill" -g -y </dev/null
+  else
+    log "npx skills add $source"
+    npx --yes skills add "$source" -g -y </dev/null
+  fi
+}
+
 install_skills() {
   if ! command -v npx >/dev/null 2>&1; then
     warn "npx not found; skipping skills"
@@ -49,16 +61,8 @@ install_skills() {
 
   local source skill
   while IFS=$'\t' read -r source skill; do
-    if [[ -n "$skill" ]]; then
-      log "npx skills add $source --skill $skill"
-      # skills reads stdin; keep it off the skills.txt loop
-      npx --yes skills add "$source" --skill "$skill" -g -y </dev/null \
-        || warn "skills add failed or partially failed: $source $skill"
-    else
-      log "npx skills add $source"
-      npx --yes skills add "$source" -g -y </dev/null \
-        || warn "skills add failed or partially failed: $source"
-    fi
+    add_skill "$source" "$skill" \
+      || warn "skills add failed or partially failed: $source $skill"
   done < <(each_skill_spec)
 }
 
@@ -68,6 +72,8 @@ install_skills() {
 publish_one_cursor_skill() {
   local name="$1"
   local backup_root="$2"
+  local source="$3"
+  local skill="$4"
   local agents="$AGENTS_SKILLS_DIR/$name"
   local cursor="$CURSOR_SKILLS_DIR/$name"
   local agents_real cursor_real
@@ -82,8 +88,21 @@ publish_one_cursor_skill() {
   fi
 
   if [[ -L "$agents" ]]; then
-    warn "skipping $name; $agents is a symlink to $(readlink "$agents")"
-    return 0
+    if [[ -d "$agents" ]]; then
+      warn "skipping $name; $agents is a symlink to $(readlink "$agents")"
+      return 0
+    fi
+    # The only copy lived in ~/.cursor/skills and is gone. Fetch it again,
+    # then the move below puts a real directory back for cloud agents.
+    log "reinstalling $name; $agents points at a missing directory"
+    if ! command -v npx >/dev/null 2>&1; then
+      warn "npx not found; cannot reinstall $name"
+      return 0
+    fi
+    add_skill "$source" "$skill" || {
+      warn "reinstall failed: $source $skill"
+      return 0
+    }
   fi
 
   if [[ ! -d "$agents" ]]; then
@@ -129,7 +148,7 @@ publish_cursor_skills() {
   local source skill name
   while IFS=$'\t' read -r source skill; do
     name="$(skill_folder_name "$source" "$skill")"
-    publish_one_cursor_skill "$name" "$backup_root"
+    publish_one_cursor_skill "$name" "$backup_root" "$source" "$skill"
   done < <(each_skill_spec)
 }
 
